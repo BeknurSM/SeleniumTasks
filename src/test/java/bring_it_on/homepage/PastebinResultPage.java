@@ -13,9 +13,10 @@ import static bring_it_on.util.Waitings.waitForElementToBeClickable;
 @Service
 public class PastebinResultPage extends PastebinHomePage {
     private static final String TITLE_NAME_SELECTOR = "//h1";
-    private static final String TEXT_CONTENT_SELECTOR = "//pre[@style]";
+    private static final String TEXT_CONTENT_SELECTOR = "/html/body/pre";
     private static final String FORMAT_SELECTOR = "(//*[contains(@href, 'bash')])[2]";
 
+    private final By syntax = By.cssSelector("div.left > a");
 
     @FindBy(xpath = "//a[text()='raw']")
     private WebElement rawButton;
@@ -28,22 +29,18 @@ public class PastebinResultPage extends PastebinHomePage {
         return getTextFromElementByXPath(TITLE_NAME_SELECTOR, driver);
     }
 
-    public String tittleName() {
-        return driver.findElement(By.xpath(TITLE_NAME_SELECTOR)).getText();
-
+    public String getSyntaxHighlight() {
+        return waitPresenceOfElementLocated(syntax).getText();
     }
-
     public PastebinResultPage clickRawButton(){
         waitForElementToBeClickable(rawButton,driver);
         rawButton.click();
         return this;
     }
 
-    public String getTextContent() {
-        return getTextFromElementByCSS(TEXT_CONTENT_SELECTOR,driver);
+    public static String getTextContent(WebDriver driver) {
+        return getTextFromElementByXPath(TEXT_CONTENT_SELECTOR, driver);
     }
 
-    public static String getHighlightedSyntax(WebDriver driver) {
-        return getTextFromElementByXPath(FORMAT_SELECTOR,driver);
-    }
+
 }

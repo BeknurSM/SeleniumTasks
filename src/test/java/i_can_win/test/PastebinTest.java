@@ -17,13 +17,13 @@ public class PastebinTest {
 
     private WebDriver driver;
 
-    @BeforeClass(enabled = false, description = "Create driver and open max size window")
+    @BeforeClass(description = "Create driver and open max size window")
     public void browserSetup() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
     }
 
-    @Test (enabled = false, description = "Create new paste on Pastebin")
+    @Test (description = "Create new paste on Pastebin")
     public void isPastebinTitleCorrect() {
         PastebinHomePageForm pastebinHomePageForm = new PastebinHomePage(driver)
                 .openPage()
@@ -34,9 +34,9 @@ public class PastebinTest {
                 .createNewPaste();
     }
 
-//    @AfterClass(alwaysRun = true, description = "Close browser after tests")
-//    public void browserShutDown() {
-//        driver.quit();
-//        driver = null;
-//    }
+    @AfterClass(alwaysRun = true, description = "Close browser after tests")
+    public void browserShutDown() {
+        driver.quit();
+        driver = null;
+    }
 }

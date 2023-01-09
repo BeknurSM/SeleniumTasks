@@ -3,14 +3,13 @@ package bring_it_on.test;
 import bring_it_on.homepage.PastebinHomePage;
 import bring_it_on.homepage.PastebinHomePageForm;
 import bring_it_on.homepage.PastebinResultPage;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
 
 
 public class PastebinTest {
@@ -24,13 +23,13 @@ public class PastebinTest {
 
     private WebDriver driver;
 
-    @BeforeClass(enabled = false, description = "Create driver and open max size window")
+    @BeforeClass(description = "Create driver and open max size window")
     public void browserSetup() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
     }
 
-    @Test(enabled = false, description = "Create new paste on Pastebin and filling the form")
+    @Test(description = "Create new paste on Pastebin and filling the form")
     public void homePageTest() {
         PastebinHomePageForm pastebinHomePageForm = new PastebinHomePage(driver)
                 .openPage()
@@ -43,22 +42,25 @@ public class PastebinTest {
                 .createNewPaste();
     }
 
-    @Test (enabled = false, description = "Check for title name")
+    @Test (description = "Check for title name")
     public void pasteNameTitle() {
         Assert.assertEquals(PastebinResultPage.getTittleName(driver), TITLE_NAME, "Tittle name in published Pastebin is wrong");
     }
 
-    @Test (enabled = false, description = "Check for syntax")
-    public void highlightedSyntax() {
-        Assert.assertEquals(PastebinResultPage.getHighlightedSyntax(driver), HIGHLIGHTING, "Highlighted syntax is wrong");
+    @Test (description = "Check Syntax")
+    public void pasteSyntaxHighlight () {
+        PastebinResultPage actualPasteResults = new PastebinResultPage(driver);
+        Assert.assertEquals(actualPasteResults.getSyntaxHighlight(), HIGHLIGHTING,
+                "Syntax Highlight is incorrect");
+    }
+    @Test (description = "Compare text to be not different from inserted")
+    public void textContents() {
+        PastebinResultPage resultPage = new PastebinResultPage(driver)
+                .clickRawButton();
+        Assert.assertEquals(PastebinResultPage.getTextContent(driver), TEXT, "Content text is different from expected");
     }
 
-//    @Test (enabled = false, description = "Compare text to be not different from inserted")
-//    public void textContents() {
-//        Assert.assertEquals(pastebinResultPage.clickRawButton().getTextContent(), TEXT, "Content text is different from expected");
-//    }
-
-    @AfterClass(enabled = false, description = "Close browser after tests")
+    @AfterClass(description = "Close browser after tests")
     public void browserShutDown() {
         driver.quit();
         driver = null;

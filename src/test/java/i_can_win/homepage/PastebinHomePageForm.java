@@ -7,8 +7,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import static i_can_win.util.Waitings.waitForElementToBeClickable;
-
 public class PastebinHomePageForm extends PastebinHomePage{
 
     @FindBy (id = "postform-text")

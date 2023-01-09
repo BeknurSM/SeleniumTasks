@@ -7,7 +7,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class Waitings {
+public class    Waitings {
 
     public static final Duration BASE_WAIT_TIME = Duration.ofSeconds(10);
 
